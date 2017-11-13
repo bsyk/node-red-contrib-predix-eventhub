@@ -1,0 +1,21 @@
+{
+  "name": "node-red-contrib-predix-eventhub",
+  "version": "1.0.0",
+  "description": "NodeRED node for interacting with Predix EventHub",
+  "main": "eventhub.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ben Sykes <ben@bensykes.com>",
+  "license": "MIT",
+  "repository": "https://github.com/bsyk/node-red-contrib-predix-eventhub.git",
+  "node-red": {
+    "nodes": {
+      "predix-eventhub": "eventhub.js"
+    }
+  },
+  "dependencies": {
+    "predix-eventhub-client": "^1.0.0"
+  }
+}

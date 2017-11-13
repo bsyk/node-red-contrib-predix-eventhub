@@ -1,0 +1,160 @@
+<script type='text/javascript'>
+    RED.nodes.registerType('predix-eventhub-config',{
+        category: 'config',
+        color: '#ebf7fb',
+        defaults: {
+            name: { value: 'EventHub' },
+            uri: { value: 'event-hub-aws-usw02.data-services.predix.io:443', required: true },
+            zoneId: { value: '', required: true },
+            uaaUrl: { value: '', required: true },
+        },
+        credentials: {
+            clientId: { type: 'text', required: true, placeholder: 'Client ID' },
+            clientSecret: { type: 'password', required: true, placeholder: 'Client Secret' },
+        },
+        inputs: 0,
+        outputs: 0,
+        icon: 'logo.png',
+        label: function() {
+            return this.name || 'predix-eventhub-config';
+        },
+        paletteLabel: 'Predix EH',
+    });
+</script>
+
+<script type='text/javascript'>
+    RED.nodes.registerType('predix-eventhub-subscriber',{
+        category: 'input',
+        color: '#ebf7fb',
+        defaults: {
+            name: { value: 'EventHub' },
+            server: { type: 'predix-eventhub-config', required: true },
+            subscriberName: { value: 'SUBSCRIBER:' + Math.round(Math.random() * 10000) },
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: 'logo.png',
+        label: function() {
+            return this.name || 'predix-eventhub-subscriber';
+        },
+        paletteLabel: 'Predix EH',
+    });
+</script>
+
+<script type='text/javascript'>
+    RED.nodes.registerType('predix-eventhub-publisher',{
+        category: 'output',
+        color: '#ebf7fb',
+        defaults: {
+            name: { value: 'EventHub' },
+            server: { type: 'predix-eventhub-config', required: true },
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: 'logo.png',
+        align: 'right',
+        label: function() {
+            return this.name || 'predix-eventhub-publisher';
+        },
+        paletteLabel: 'Predix EH',
+    });
+</script>
+
+<script type='text/x-red' data-template-name='predix-eventhub-config'>
+    <div class='form-row'>
+        <label for='node-config-input-name'><i class='icon-tag'></i> Name</label>
+        <input type='text' id='node-config-input-name' placeholder='Name'>
+    </div>
+    <div class='form-row'>
+        <label for='node-config-input-uri'><i class='icon-plus-sign'></i> URI</label>
+        <input type='text' id='node-config-input-uri' placeholder='event-hub-aws-usw02.data-services.predix.io:443'>
+    </div>
+    <div class='form-row'>
+        <label for='node-config-input-zoneId'><i class='icon-lock'></i> Zone ID</label>
+        <input type='text' id='node-config-input-zoneId' placeholder='4299f336-3e67-4c63-8fd9-c7eb7c89cd0b'>
+    </div>
+    <div class='form-row'>
+        <label for='node-config-input-uaaUrl'><i class='icon-certificate'></i> UAA URL</label>
+        <input type='text' id='node-config-input-uaaUrl' placeholder='https://8b302b62-c98d-4317-b756-c24a8e23a685.predix-uaa.run.aws-usw02-pr.ice.predix.io/oauth/token'>
+    </div>
+    <div class='form-row'>
+        <label for='node-config-input-clientId'><i class='icon-user'></i> Client ID</label>
+        <input type='text' id='node-config-input-clientId' placeholder='Client ID'>
+    </div>
+    <div class='form-row'>
+        <label for='node-config-input-clientSecret'><i class='icon-exclamation-sign'></i> Client Secret</label>
+        <input type='password' id='node-config-input-clientSecret' placeholder='Client Secret'>
+    </div>
+</script>
+
+<script type="text/x-red" data-template-name="predix-eventhub-subscriber">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-bookmark"></i> EventHub Client</label>
+    <input type="text" id="node-input-server">
+  </div>
+  <div class="form-row">
+    <label for="node-input-subscriberName"><i class="fa id-badge"></i> Subscriber Name</label>
+    <input type="text" id="node-input-subscriberName">
+  </div>
+</script>
+
+<script type="text/x-red" data-template-name="predix-eventhub-publisher">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-bookmark"></i> EventHub Client</label>
+    <input type="text" id="node-input-server">
+  </div>
+</script>
+
+<script type='text/x-red' data-help-name='predix-eventhub-config'>
+    <p>Configure a connection for Predix Event Hub</p>
+    <p>
+      <ul>
+        <li><b>Name:</b> Enter a name for this client node</li>
+        <li><b>Event Hub Url:</b> Enter the Predix Event Hub server URL, currently default to <code>event-hub-aws-usw02.data-services.predix.io:443</code></li>
+        <li><b>Predix-Zone-id:</b> Enter the Predix-Zone-id for your Event Hub instance.</li>
+        <li><b>UAA url:</b> Enter the host url for the UAA instance (including /oauth/token) that is associated with the Predix Event Hub instance</li>
+        <li><b>Client ID:</b> Enter a client ID that has permission to publish/subscribe to Event Hub</li>
+        <li><b>Client secret:</b> Enter the client secret</li>
+      </ul>
+    </p>
+    <p>
+      Note: The client will need the correct scopes for accessing Event Hub.<br/>
+      Example:
+      <code>
+      predix-event-hub.zones.66567c0f-0888-4e20-858a-18c99ef3c7bc.user
+      predix-event-hub.zones.66567c0f-0888-4e20-858a-18c99ef3c7bc.grpc.subscribe
+      predix-event-hub.zones.66567c0f-0888-4e20-858a-18c99ef3c7bc.grpc.publish
+      </code>
+      Where <code>66567c0f-0888-4e20-858a-18c99ef3c7bc</code> is your Predix Event Hub Zone ID.<br/>
+      You may create one configuration for publishing and a separate for subscribing of needed.
+    </p>
+</script>
+
+<script type='text/x-red' data-help-name='predix-eventhub-subscriber'>
+    <p>Subscribe to a Predix Event Hub instance.  A message will be emitted for every received event.</p>
+    <p>
+      <ul>
+        <li>msg.payload = the body of the event</li>
+        <li>msg.tags = the tags of the event</li>
+        <li>msg.raw = the full, raw Event Hub event</li>
+      </ul>
+    </p>
+</script>
+
+<script type='text/x-red' data-help-name='predix-eventhub-publisher'>
+<p>Publish to a Predix Event Hub instance.  An event will be published for every received message.</p>
+<p>
+  <ul>
+    <li>msg.payload = the body of the event</li>
+    <li>msg.tags = the tags of the event</li>
+  </ul>
+</p>
+</script>
