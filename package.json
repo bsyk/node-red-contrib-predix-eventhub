@@ -6,7 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "node-red",
+    "predix",
+    "eventhub",
+    "subscribe",
+    "publish",
+    "pub/sub"
+  ],
   "author": "Ben Sykes <ben@bensykes.com>",
   "license": "MIT",
   "repository": "https://github.com/bsyk/node-red-contrib-predix-eventhub.git",
