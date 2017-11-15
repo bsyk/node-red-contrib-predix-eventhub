@@ -45,7 +45,6 @@ module.exports = function(RED) {
         const Publisher = require('predix-eventhub-client').Publisher;
         const pub = new Publisher(node.server.config);
         node.on('input', msg => {
-          console.log('Input:', msg);
           pub.postEvent(msg.payload, msg.tags);
         });
     }
