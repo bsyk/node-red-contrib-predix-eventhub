@@ -18,7 +18,7 @@
         label: function() {
             return this.name || 'predix-eventhub-config';
         },
-        paletteLabel: 'Predix EH',
+        paletteLabel: 'Event Hub',
     });
 </script>
 
@@ -27,7 +27,7 @@
         category: 'predix',
         color: '#ebf7fb',
         defaults: {
-            name: { value: 'EventHub' },
+            name: { value: 'Subscriber' },
             server: { type: 'predix-eventhub-config', required: true },
             subscriberName: { value: 'SUBSCRIBER:' + Math.round(Math.random() * 10000) },
         },
@@ -37,7 +37,7 @@
         label: function() {
             return this.name || 'predix-eventhub-subscriber';
         },
-        paletteLabel: 'Predix EH',
+        paletteLabel: 'Subscriber',
     });
 </script>
 
@@ -46,7 +46,7 @@
         category: 'predix',
         color: '#ebf7fb',
         defaults: {
-            name: { value: 'EventHub' },
+            name: { value: 'Publisher' },
             server: { type: 'predix-eventhub-config', required: true },
         },
         inputs: 1,
@@ -56,7 +56,7 @@
         label: function() {
             return this.name || 'predix-eventhub-publisher';
         },
-        paletteLabel: 'Predix EH',
+        paletteLabel: 'Publisher',
     });
 </script>
 
