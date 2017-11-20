@@ -30,7 +30,10 @@ module.exports = function(RED) {
             console.log('Got Error', err);
             return;
           }
-          node.send({ payload: body, tags: data.tags, raw: data });
+          const id = data.id;
+          // Set context and parent for audit trail
+          const tags = Object.assign({}, { 'event-context':id }, data.tags, { 'event-parent':id });
+          node.send({ payload: body, tags, raw: data });
         });
     }
 
